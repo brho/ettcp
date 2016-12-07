@@ -1,0 +1,6 @@
+ToDo:
+
+Code interlocks to prevent invalid command line switches being
+specified.
+Make it work when there is no connectivity (timeout somewhere).
+Windows port

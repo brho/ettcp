@@ -1,0 +1,15 @@
+'\"macro stdmacro
+.TH BLOW 1 local
+.SH NAME
+blow \- write forever on stdout
+.SH SYNOPSIS
+.B blow
+.SH DESCRIPTION
+.I Blow
+writes meaningless ascii data to stdout. Blow was written to be used with xinetd
+in network throughput testing. A client connecting via TCP to the port designated with blow
+as its server will receive a constant stream of data, sent as fast as the network will allow,
+up to the capacity of the sending host to transmit data, and provided that other processes'
+use of machine resources do not interfere.	
+.SH SEE ALSO
+xinetd(1), ettcp(1), suck(1)

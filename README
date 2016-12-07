@@ -1,0 +1,72 @@
+
+ettcp is an updated version of ttcp
+
+Features added:
+
+Timed test mode, allowing easy measurement of
+network throughput where the speed is not known
+in advance (e.g test for 10 seconds, rather than
+for 1000 buffers).
+
+Callback mode, where ettcp makes a connection
+to the remote node, then expects to _receive_ data.
+This removes the need to run another copy of ttcp
+at the remote end. We can use a dumb xinetd server
+to spew data at whoever connects.
+
+Many compiler warnings removed.
+
+Two shell scripts: speedfrom and speedto which
+make it simple to run a 10 second speed test.
+
+Simple xinetd compatible programs "suck" and 
+"blow" which respectively receive data and transmit
+data on stdin and stdout.
+
+xinetd.d files for suck and blow
+
+There are obvious potential denaial of service
+issues with these--- consider using xinetd
+to restrict access to these ports.
+
+Enhanced result printing code: it is now possible
+to make ettcp quit from printing chatty output, it
+only prints the network speed measured. Raw format
+where only the bits/s number is printed, without
+"Mb/s" etc. Useful where a program is parsing the
+output.
+
+This code has only been tested on 2.4.x versions
+of Intel Linux. But there's no obvious reason
+why it should't work for other OSes and architectures.
+
+
+Text below is the README file from ttcp
+------------------------------------------
+
+TTCP is a benchmarking tool for determining TCP and UDP performance 
+between 2 systems.
+
+The program was created at the US Army Ballistics Research Lab (BRL)
+and is in the public domain. Feel free to distribute this program
+but please do leave the credit notices in the source and man page intact.
+
+Contents of this directory:
+
+ttcp.c		Source that runs on IRIX 3.3.x and 4.0.x systems
+		and BSD-based systems.  This version also uses getopt(3) 
+		and has 2 new options: -f and -T.
+
+ttcp.c-brl	Original source from BRL.
+
+ttcp.1		Manual page (describes ttcp.c options, which are a 
+		superset of the other version).
+
+
+How to get TCP performance numbers:
+
+	receiver				sender
+
+host1%  ttcp -r -s			host2% ttcp -t -s host1
+
+-n and -l options change the number and size of the buffers.

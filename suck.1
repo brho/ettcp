@@ -1,0 +1,15 @@
+'\"macro stdmacro
+.TH SUCK 1 local
+.SH NAME
+suck \- Read forever from stdin
+.SH SYNOPSIS
+.B suck
+.SH DESCRIPTION
+.I Suck
+reads data from stdin forever, and ignores the data. Suck was written to be used with xinetd
+in network throughput testing. A client connecting via TCP to the port designated with suck
+as its server can transmit a constant stream of data, sent as fast as the network will allow,
+up to the capacity of the reciving host to accept data, and provided that other processes'
+use of machine resources do not interfere.	
+.SH SEE ALSO
+xinetd(1), ettcp(1), blow(1)

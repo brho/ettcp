@@ -1,0 +1,15 @@
+'\"macro stdmacro
+.TH SPEEDTO 1 local
+.SH NAME
+ttcp \- Measure and report the network capacity between here and a specified node
+.SH SYNOPSIS
+.B suck
+.SH DESCRIPTION
+.I Speedto
+is a convenient shell script wrapper for ettcp. Speedto passes the appropriate arguments to ettcp
+to measure TCP transmit capacity from the local host to the specified host, over a ten second peroid.
+Speedto assumes that the remote host is running something like the 
+.I suck 
+program via xinetd on port 5500.
+.SH SEE ALSO
+ettcp(1), speedfrom(1)

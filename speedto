@@ -1,0 +1,2 @@
+#!/bin/sh
+ettcp -p 5500 -i 10 -f m -q -s -t $1
