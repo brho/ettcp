@@ -47,6 +47,9 @@ static char RCSid[] = "ttcp.c $Revision: 1.12 $";
 /* #define BSD41a */
 /* #define SYSV */ /* required on SGI IRIX releases before 3.3 */
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <errno.h>
@@ -284,7 +287,8 @@ char **argv;
 		err("malloc");
 	if (bufalign != 0)
 		buf +=
-		    (bufalign - ((int)buf % bufalign) + bufoffset) % bufalign;
+		    (bufalign - ((uintptr_t)buf % bufalign) + bufoffset)
+		    % bufalign;
 
 	if (!q_flag) {
 		if (trans) {
@@ -489,21 +493,21 @@ char **argv;
 			        trans ? "-t" : "-r", nbytes, cput,
 			        outfmt(nbytes / cput));
 		}
-		fprintf(stdout, "nttcp%s: %d I/O calls, msec/call = %.2f, "
+		fprintf(stdout, "nttcp%s: %ld I/O calls, msec/call = %.2f, "
 		                "calls/sec = %.2f\n",
 		        trans ? "-t" : "-r", numCalls,
 		        1024.0 * realt / ((double)numCalls),
 		        ((double)numCalls) / realt);
 		fprintf(stdout, "nttcp%s: %s\n", trans ? "-t" : "-r", stats);
 		if (verbose) {
-			fprintf(stdout, "nttcp%s: buffer address %#x\n",
+			fprintf(stdout, "nttcp%s: buffer address %p\n",
 			        trans ? "-t" : "-r", buf);
 		}
 	} /* !q_flag */
 	exit(0);
 
 usage:
-	fprintf(stderr, Usage);
+	fprintf(stderr, "%s", Usage);
 	exit(1);
 }
 
@@ -695,14 +699,14 @@ char *outp;
 
 			case 'U':
 				tvsub(&tdiff, &r1->ru_utime, &r0->ru_utime);
-				sprintf(outp, "%d.%01d", tdiff.tv_sec,
+				sprintf(outp, "%ld.%01ld", tdiff.tv_sec,
 				        tdiff.tv_usec / 100000);
 				END(outp);
 				break;
 
 			case 'S':
 				tvsub(&tdiff, &r1->ru_stime, &r0->ru_stime);
-				sprintf(outp, "%d.%01d", tdiff.tv_sec,
+				sprintf(outp, "%ld.%01ld", tdiff.tv_sec,
 				        tdiff.tv_usec / 100000);
 				END(outp);
 				break;
@@ -726,7 +730,7 @@ char *outp;
 				break;
 
 			case 'X':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        t == 0 ? 0
 				               : (r1->ru_ixrss - r0->ru_ixrss) /
 				                     t);
@@ -734,7 +738,7 @@ char *outp;
 				break;
 
 			case 'D':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        t == 0
 				            ? 0
 				            : (r1->ru_idrss + r1->ru_isrss -
@@ -744,7 +748,7 @@ char *outp;
 				break;
 
 			case 'K':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        t == 0 ? 0
 				               : ((r1->ru_ixrss + r1->ru_isrss +
 				                   r1->ru_idrss) -
@@ -755,35 +759,35 @@ char *outp;
 				break;
 
 			case 'M':
-				sprintf(outp, "%d", r1->ru_maxrss / 2);
+				sprintf(outp, "%ld", r1->ru_maxrss / 2);
 				END(outp);
 				break;
 
 			case 'F':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        r1->ru_majflt - r0->ru_majflt);
 				END(outp);
 				break;
 
 			case 'R':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        r1->ru_minflt - r0->ru_minflt);
 				END(outp);
 				break;
 
 			case 'I':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        r1->ru_inblock - r0->ru_inblock);
 				END(outp);
 				break;
 
 			case 'O':
-				sprintf(outp, "%d",
+				sprintf(outp, "%ld",
 				        r1->ru_oublock - r0->ru_oublock);
 				END(outp);
 				break;
 			case 'C':
-				sprintf(outp, "%d+%d",
+				sprintf(outp, "%ld+%ld",
 				        r1->ru_nvcsw - r0->ru_nvcsw,
 				        r1->ru_nivcsw - r0->ru_nivcsw);
 				END(outp);

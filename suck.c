@@ -2,6 +2,7 @@
 /* Program to read on stdin forever */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {

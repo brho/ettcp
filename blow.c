@@ -2,6 +2,7 @@
 /* Program to write to stdout forever */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 static void fill_buffer(char *buffer, size_t buffer_size)
 {
