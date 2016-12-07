@@ -293,23 +293,23 @@ char **argv;
 	if (!q_flag) {
 		if (trans) {
 			fprintf(
-			    stdout,
+			    stderr,
 			    "ttcp-t: buflen=%d, nbuf=%d, align=%d/%d, port=%d",
 			    buflen, nbuf, bufalign, bufoffset, port);
 			if (sockbufsize)
-				fprintf(stdout, ", sockbufsize=%d",
+				fprintf(stderr, ", sockbufsize=%d",
 				        sockbufsize);
-			fprintf(stdout, "  %s  -> %s\n", udp ? "udp" : "tcp",
+			fprintf(stderr, "  %s  -> %s\n", udp ? "udp" : "tcp",
 			        host);
 		} else {
 			fprintf(
-			    stdout,
+			    stderr,
 			    "ttcp-r: buflen=%d, nbuf=%d, align=%d/%d, port=%d",
 			    buflen, nbuf, bufalign, bufoffset, port);
 			if (sockbufsize)
-				fprintf(stdout, ", sockbufsize=%d",
+				fprintf(stderr, ", sockbufsize=%d",
 				        sockbufsize);
-			fprintf(stdout, "  %s\n", udp ? "udp" : "tcp");
+			fprintf(stderr, "  %s\n", udp ? "udp" : "tcp");
 		}
 	} /* !q_flag */
 
@@ -481,26 +481,26 @@ char **argv;
 	if (realt <= 0.0)
 		realt = 0.001;
 	if (q_flag) {
-		fprintf(stdout, "%s\n", outfmt(nbytes / realt));
+		fprintf(stderr, "%s\n", outfmt(nbytes / realt));
 	} else {
 		fprintf(
-		    stdout,
+		    stderr,
 		    "nttcp%s: %.0f bytes in %.2f real seconds = %s/sec +++\n",
 		    trans ? "-t" : "-r", nbytes, realt, outfmt(nbytes / realt));
 		if (verbose) {
-			fprintf(stdout, "nttcp%s: %.0f bytes in %.2f CPU "
+			fprintf(stderr, "nttcp%s: %.0f bytes in %.2f CPU "
 			                "seconds = %s/cpu sec\n",
 			        trans ? "-t" : "-r", nbytes, cput,
 			        outfmt(nbytes / cput));
 		}
-		fprintf(stdout, "nttcp%s: %ld I/O calls, msec/call = %.2f, "
+		fprintf(stderr, "nttcp%s: %ld I/O calls, msec/call = %.2f, "
 		                "calls/sec = %.2f\n",
 		        trans ? "-t" : "-r", numCalls,
 		        1024.0 * realt / ((double)numCalls),
 		        ((double)numCalls) / realt);
-		fprintf(stdout, "nttcp%s: %s\n", trans ? "-t" : "-r", stats);
+		fprintf(stderr, "nttcp%s: %s\n", trans ? "-t" : "-r", stats);
 		if (verbose) {
-			fprintf(stdout, "nttcp%s: buffer address %p\n",
+			fprintf(stderr, "nttcp%s: buffer address %p\n",
 			        trans ? "-t" : "-r", buf);
 		}
 	} /* !q_flag */
